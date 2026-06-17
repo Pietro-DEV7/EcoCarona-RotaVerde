@@ -1,15 +1,14 @@
 document.addEventListener('DOMContentLoaded', () => {
     lucide.createIcons();
 
-    // =============== BANCO DE DADOS LOCAL ===============
+
     let appData = JSON.parse(localStorage.getItem('ecoData')) || {
         co2Evitado: 0,
         pontosUsuario: 0,
-        pontosTurmaBase: 3120, // Base de pontos dos Meninos do Porão
+        pontosTurmaBase: 3120,
         isLoggedIn: false
     };
 
-    // =============== REGRAS DE NEGÓCIO ===============
     const regeasPorKM = {
         walk:   { pontos: 120, co2: 0.9, nome: 'A pé' },
         bike:   { pontos: 100, co2: 0.5, nome: 'Bicicleta' },
@@ -18,7 +17,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let modalidadeAtual = null;
 
-    // =============== ELEMENTOS DO DOM ===============
     const screenLogin = document.getElementById('screen-login');
     const mainApp = document.getElementById('main-app');
     const loginForm = document.getElementById('login-form');
@@ -36,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalErro = document.getElementById('modal-erro');
     const modalDesc = document.getElementById('modal-desc');
 
-    // =============== FUNÇÕES PRINCIPAIS ===============
+
     function updateUI() {
         displayCO2.innerText = appData.co2Evitado.toFixed(1);
         displayPoints.innerText = appData.pontosUsuario;
@@ -62,7 +60,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     checkLoginState();
 
-    // =============== LOGIN / LOGOUT ===============
     loginForm.addEventListener('submit', (e) => {
         e.preventDefault();
         appData.isLoggedIn = true;
@@ -76,7 +73,6 @@ document.addEventListener('DOMContentLoaded', () => {
         checkLoginState();
     });
 
-    // =============== LÓGICA DO MODAL ===============
     document.querySelectorAll('.btn-trip').forEach(button => {
         button.addEventListener('click', (e) => {
             modalidadeAtual = e.currentTarget.getAttribute('data-type');
@@ -133,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 400);
     });
 
-    // =============== NAVEGAÇÃO ===============
+
     const navButtons = document.querySelectorAll('.nav-btn');
     const sections = {
         'dashboard': document.getElementById('tab-dashboard'),
