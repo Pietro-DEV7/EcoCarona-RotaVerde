@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoCarona & RotaVerde - ODS 13</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-slate-50 font-sans text-slate-800 min-h-screen flex flex-col relative">
+
+    <!-- ================= TELA 1: LOGIN ================= -->
+    <div id="screen-login" class="flex-1 flex items-center justify-center p-4 transition-all duration-500">
+        <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md border border-slate-100 bounce-in">
+            <div class="text-center mb-8">
+                <div class="inline-flex p-3 bg-emerald-100 text-emerald-600 rounded-full mb-3 shadow-sm">
+                    <i data-lucide="leaf" class="w-8 h-8"></i>
+                </div>
+                <h1 class="text-2xl font-bold text-slate-900">EcoCarona & RotaVerde</h1>
+                <p class="text-sm text-slate-500 mt-1">Sua rota diária combatendo as emissões de CO₂</p>
+            </div>
+
+            <form id="login-form" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">E-mail Escolar</label>
+                    <input type="email" id="email-input" required placeholder="seu.nome@escola.com" class="w-full px-4 py-2 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 transition">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">Senha</label>
+                    <input type="password" required placeholder="••••••••" class="w-full px-4 py-2 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 transition">
+                </div>
+                <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2.5 rounded-xl transition duration-200 shadow-lg shadow-emerald-600/20 active:scale-[0.98]">
+                    Entrar no Desafio
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ================= APP PRINCIPAL ================= -->
+    <div id="main-app" class="hidden flex-1 flex-col fade-in">
+        <header class="bg-white border-b border-slate-100 sticky top-0 z-10 shadow-sm">
+            <div class="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <span class="p-2 bg-emerald-50 text-emerald-600 rounded-lg"><i data-lucide="zap" class="w-5 h-5"></i></span>
+                    <span class="font-bold text-slate-900 tracking-tight hidden sm:block">EcoCarona & RotaVerde</span>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <span class="text-xs font-semibold bg-amber-100 text-amber-800 px-3 py-1 rounded-full flex items-center gap-1 border border-amber-200">
+                        <i data-lucide="award" class="w-3.5 h-3.5"></i> <span id="user-class">Meninos do Porão</span>
+                    </span>
+                    <button id="btn-logout" class="text-slate-400 hover:text-rose-600 transition p-2 rounded-full hover:bg-rose-50"><i data-lucide="log-out" class="w-5 h-5"></i></button>
+                </div>
+            </div>
+        </header>
+
+        <main class="flex-1 max-w-4xl w-full mx-auto p-4 pb-24">
+            <!-- ABA 1: DASHBOARD -->
+            <section id="tab-dashboard" class="space-y-6 block">
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 metric-card">
+                        <p class="text-xs font-medium text-slate-400 uppercase tracking-wider">CO₂ Evitado</p>
+                        <p class="text-3xl font-extrabold text-emerald-600 mt-1"><span id="co2-value">0.0</span> <span class="text-sm font-normal text-slate-500">kg</span></p>
+                    </div>
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 metric-card">
+                        <p class="text-xs font-medium text-slate-400 uppercase tracking-wider">EcoPontos</p>
+                        <p class="text-3xl font-extrabold text-blue-600 mt-1"><span id="points-value">0</span> <span class="text-sm font-normal text-slate-500">pts</span></p>
+                    </div>
+                </div>
+
+                <div class="bg-gradient-to-br from-emerald-600 to-teal-800 p-6 rounded-2xl shadow-xl text-white relative overflow-hidden">
+                    <div class="absolute -right-6 -top-6 text-white/10">
+                        <i data-lucide="globe-2" class="w-32 h-32"></i>
+                    </div>
+
+                    <div class="relative z-10">
+                        <h2 class="text-lg font-bold flex items-center gap-2"><i data-lucide="navigation" class="w-5 h-5"></i> Registrar Trajeto</h2>
+                        <p class="text-emerald-50 text-sm mt-1 mb-5">Como você se locomoveu hoje?</p>
+                        
+                        <div class="grid grid-cols-3 gap-3">
+                            <button data-type="bike" class="btn-trip bg-white/10 hover:bg-white/20 active:scale-95 transition p-3 rounded-xl flex flex-col items-center gap-1 border border-white/10 backdrop-blur-sm">
+                                <i data-lucide="bike" class="w-6 h-6"></i>
+                                <span class="text-[11px] font-medium mt-1">Bicicleta</span>
+                            </button>
+                            <button data-type="walk" class="btn-trip bg-white/10 hover:bg-white/20 active:scale-95 transition p-3 rounded-xl flex flex-col items-center gap-1 border border-white/10 backdrop-blur-sm">
+                                <i data-lucide="footprints" class="w-6 h-6"></i>
+                                <span class="text-[11px] font-medium mt-1">A Pé</span>
+                            </button>
+                            <button data-type="carona" class="btn-trip bg-white/10 hover:bg-white/20 active:scale-95 transition p-3 rounded-xl flex flex-col items-center gap-1 border border-white/10 backdrop-blur-sm">
+                                <i data-lucide="users" class="w-6 h-6"></i>
+                                <span class="text-[11px] font-medium mt-1">Carona</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ABA 2: RANKING -->
+            <section id="tab-ranking" class="hidden space-y-4">
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100">
+                    <h2 class="text-base font-bold text-slate-900 mb-1 flex items-center gap-2">
+                        <i data-lucide="trophy" class="w-5 h-5 text-amber-500"></i> Ranking Escolar
+                    </h2>
+                    <p class="text-xs text-slate-500 mb-5">Impacto gerado por grupo neste semestre.</p>
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between p-3 bg-white rounded-xl border-2 border-emerald-400 shadow-sm relative overflow-hidden">
+                            <div class="absolute left-0 top-0 bottom-0 w-1 bg-emerald-500"></div>
+                            <div class="flex items-center space-x-3 pl-2">
+                                <span class="font-bold text-slate-600 w-5 text-center">1º</span>
+                                <div class="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-xs shadow-inner">MP</div>
+                                <span class="font-bold text-slate-900 text-sm">Meninos do Porão (Você)</span>
+                            </div>
+                            <span class="text-xs font-bold text-emerald-700 bg-emerald-100 px-2.5 py-1 rounded-full border border-emerald-200"><span id="ranking-points">3.120</span> pts</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <nav class="bg-white border-t border-slate-200 fixed bottom-0 left-0 right-0 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] pb-safe">
+            <div class="max-w-md mx-auto flex justify-around p-2">
+                <button data-target="dashboard" class="nav-btn flex flex-col items-center gap-1 text-emerald-600 transition font-medium text-[10px] w-16 p-1 rounded-lg">
+                    <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
+                    <span>Dashboard</span>
+                </button>
+                <button data-target="ranking" class="nav-btn flex flex-col items-center gap-1 text-slate-400 hover:text-emerald-500 transition font-medium text-[10px] w-16 p-1 rounded-lg">
+                    <i data-lucide="bar-chart-3" class="w-5 h-5"></i>
+                    <span>Ranking</span>
+                </button>
+            </div>
+        </nav>
+    </div>
+
+    <!-- ================= MODAL DE DISTÂNCIA ================= -->
+    <div id="modal-distancia" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 opacity-0 transition-opacity duration-300">
+        <div class="bg-white rounded-2xl p-6 w-full max-w-sm shadow-2xl transform scale-95 transition-transform duration-300" id="modal-content">
+            <h3 class="text-lg font-bold text-slate-900 mb-1 flex items-center gap-2">
+                <i data-lucide="map-pin" class="w-5 h-5 text-emerald-600"></i> Informar Distância
+            </h3>
+            <p id="modal-desc" class="text-sm text-slate-500 mb-4">Quantos KM você percorreu?</p>
+            
+            <input type="number" id="input-km" step="0.1" min="0.1" placeholder="Ex: 2.5" class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 mb-4 text-lg font-medium text-center">
+            
+            <div class="flex gap-3">
+                <button id="btn-cancelar-modal" class="flex-1 px-4 py-2.5 text-slate-600 font-medium bg-slate-100 hover:bg-slate-200 rounded-xl transition">Cancelar</button>
+                <button id="btn-confirmar-modal" class="flex-1 px-4 py-2.5 text-white font-medium bg-emerald-600 hover:bg-emerald-700 rounded-xl transition shadow-lg shadow-emerald-600/20">Calcular</button>
+            </div>
+            <p id="modal-erro" class="hidden text-xs text-rose-500 text-center mt-3 font-medium">Por favor, insira uma distância válida maior que 0.</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
